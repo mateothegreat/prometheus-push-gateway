@@ -1,0 +1,5 @@
+- name: "Check if push gateway is accessible"
+  uri:
+    url: "http://{{ prometheus_push_gateway.listen_address }}"
+    method: "GET"
+    status_code: "200"

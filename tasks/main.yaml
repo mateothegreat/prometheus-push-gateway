@@ -1,3 +1,4 @@
 ---
 - import_tasks: "account.yaml"
 - import_tasks: "install.yaml"
+- import_tasks: "checks.yaml"
