@@ -1,0 +1,7 @@
+prometheus_push_gateway:
+  version: "0.18.1"
+  user: "pushgateway"
+  group: "pushgateway"
+  install_path: "/usr/local/bin"
+  install_binary_name: "prometheus-push-gateway"
+  listen_address: "0.0.0.0:9101"

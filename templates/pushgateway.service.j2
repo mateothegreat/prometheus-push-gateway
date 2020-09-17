@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus Push Gateway
+After=network.target
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart={{ prometheus_push_gateway.install_path | default('/usr/local/bin') }}/{{ prometheus_push_gateway.install_binary_name | default('prometheus-push-gateway') }} --web.listen-address={{ prometheus_push_gateway.listen_address | default('0.0.0.0:9101') }} --log.level=error
+User={{ prometheus_push_gateway.user | default('exporters') }}
+Group={{ prometheus_push_gateway.group | default('exporters') }}
+
+[Install]
+WantedBy=multi-user.target

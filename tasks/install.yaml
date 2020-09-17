@@ -1,0 +1,35 @@
+- name: "Download & unpack pushgateway"
+  unarchive:
+    src: "https://github.com/prometheus/pushgateway/releases/download/v{{ prometheus_push_gateway.version | default('1.2.0') }}/pushgateway-{{ prometheus_push_gateway.version | default('1.2.0') }}.linux-amd64.tar.gz"
+    dest: "/tmp"
+    remote_src: "yes"
+
+- name: "Install node_exporter binary"
+  become: "true"
+  copy:
+    src: "/tmp/pushgateway-{{ prometheus_push_gateway.version | default('1.2.0') }}.linux-amd64/pushgateway"
+    dest: "{{ prometheus_push_gateway.install_path | default('/usr/local/bin') }}/{{ prometheus_push_gateway.install_binary_name | default('prometheus-push-gateway') }}"
+    mode: "0555"
+    remote_src: "yes"
+
+- name: "Install pushgateway.service"
+  become: "true"
+  template:
+    src: "pushgateway.service.j2"
+    dest: "/etc/systemd/system/pushgateway.service"
+    mode: "0600"
+
+- name: "Start pushgateway.service"
+  become: "true"
+  systemd:
+    name: "pushgateway"
+    enabled: "yes"
+    daemon_reload: "yes"
+    state: "restarted"
+
+- name: "Remove tmp files"
+  file:
+    path: "{{ item }}"
+    state: "absent"
+  loop:
+    - "/tmp/pushgateway-{{ prometheus_push_gateway.version | default('1.2.0') }}.linux-amd64"

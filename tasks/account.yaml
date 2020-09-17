@@ -1,0 +1,13 @@
+---
+- name: "Create group ({{ prometheus_push_gateway.group | default('pushgateway') }})"
+  become: "true"
+  group:
+    name: "{{ prometheus_push_gateway.group | default('pushgateway') }}"
+
+- name: "Create user ({{ prometheus_push_gateway.user | default('pushgateway') }})"
+  become: "true"
+  user:
+    name: "{{ prometheus_push_gateway.user | default('pushgateway') }}"
+    create_home: "no"
+    group: "{{ prometheus_push_gateway.group | default('pushgateway') }}"
+    shell: "/bin/false"
