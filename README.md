@@ -9,7 +9,7 @@ pip install ansible
 
 ```yaml
 prometheus_push_gateway:
-  version: "0.18.1"
+  version: "1.2.0"
   user: "pushgateway"
   group: "pushgateway"
   install_path: "/usr/local/bin"
@@ -27,7 +27,7 @@ Add the following to a file like `playbook.yaml`:
     - role: "mateothegreat.prometheus_push_gateway"
       vars:
         prometheus_push_gateway:
-          version: "0.18.1"
+          version: "1.2.0"
           user: "pushgateway"
           group: "pushgateway"
           install_path: "/usr/local/bin"
